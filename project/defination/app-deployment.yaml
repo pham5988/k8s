@@ -1,0 +1,21 @@
+piVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: vpodapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vprodapp
+  template:
+    metadata:
+      labels:
+        app: vproapp
+    spec:
+      containers:
+        - name: tomcat
+          image: bin5988/vprofile:app_v1
+          ports:
+            - containerPort: 8080 
