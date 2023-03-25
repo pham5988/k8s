@@ -1,21 +1,30 @@
-piVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: vproapp
   labels:
     app: vpodapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: vprodapp
+      app: vproapp
   template:
     metadata:
       labels:
         app: vproapp
     spec:
       containers:
-        - name: tomcat
+        - name: vproapp
           image: bin5988/vprofile:app_v1
           ports:
-            - containerPort: 8080 
+            - name: vproapp-port 
+              containerPort: 8080
+      # check db pod, make sure db pod run up first then run vproapp
+      initContainers:
+        - name: init-mydb
+          image: busybox
+          command: ['sh','-c','until nslookup vprodb; do echo waiting for mydb; sleep; 2; done']
+        - name: init-memcache
+          image: busybox
+          command: ['sh','-c','until nslookup vprocache01; do echo waiting for mydb; sleep; 2; done']
