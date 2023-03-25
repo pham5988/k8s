@@ -18,6 +18,7 @@ spec:
           image: bin5988/vprofile
           args:
             - "--ignore-db-dir=lost+found"
+          # attach volume in pod, at mountPath /var/lib/mysql
           volumesMounts: 
             - mountPath: /var/lib/mysql
               name: vpro-db-data
@@ -30,10 +31,25 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: db-pass
+      # nodeSelector
       nodeSelector:
         zone: us-east-1a
+      # declare created EBS volume
       volumes:
         - name: vpro-db-data
           awsElasticBlockStore:
             volumesID: vol-id
             fsType: ext4
+---
+apiVersion: v1
+kind: Sevice
+metadata:
+  name: vprodb
+spec:
+  ports:
+    - port: 3306
+      targetPort: vprodb-port
+      protocol: TCP
+  selector:
+    name: vprodb
+  type: ClusterIP

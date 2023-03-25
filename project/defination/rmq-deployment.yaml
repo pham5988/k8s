@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: vpromq01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vpromq01
+  template:
+    metadata:
+      labels:
+        app: vpromq01
+    spec:
+      - containers:
+        name: vpromq01
+        image: rabbitmq
+        ports:
+          - name: vpromq-port
+            port: 15672
+        # set env variable from secret file {key.pair}
+        env:
+          name: RABBITMQ_DEFAULT_PASS
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: rmq-pass
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vpromq01
+spec:
+  ports:
+    - port: 15672
+      targetPort: vpromq-port
+      protocol: TCP
+  selector:
+    name: vpromq01
+  type: ClusterIP
