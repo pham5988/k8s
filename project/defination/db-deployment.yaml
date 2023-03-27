@@ -34,7 +34,7 @@ spec:
                   key: db-pass
       # nodeSelector
       nodeSelector:
-        zone: us-east-1b
+        zone: us-east-1a
       # declare created EBS volume
       volumes:
         - name: vpro-db-data
