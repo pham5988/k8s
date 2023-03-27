@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: vprodb
-          image: bin5988/vprofile:db_v1
+          image: vprofile/vprofiledb:V1
           args:
             - "--ignore-db-dir=lost+found"
           # attach volume in pod, at mountPath /var/lib/mysql
