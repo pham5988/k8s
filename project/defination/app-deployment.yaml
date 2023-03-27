@@ -20,7 +20,8 @@ spec:
           ports:
             - name: vproapp-port 
               containerPort: 8080
-      # check db pod, make sure db pod run up first then run vproapp
+      # if have dependencies pod, use initContainers for checking these pods
+      # check db and memcached pods, make sure these pods run up first then run vproapp
       initContainers:
         - name: init-mydb
           image: busybox
