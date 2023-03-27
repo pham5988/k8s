@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: vproapp
   labels:
-    app: vpodapp
+    app: vproapp
 spec:
   replicas: 1
   selector:
