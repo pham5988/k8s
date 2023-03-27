@@ -19,7 +19,7 @@ spec:
           args:
             - "--ignore-db-dir=lost+found"
           # attach volume in pod, at mountPath /var/lib/mysql
-          volumesMounts: 
+          volumeMounts: 
             - mountPath: /var/lib/mysql
               name: vpro-db-data
           ports:
@@ -38,5 +38,5 @@ spec:
       volumes:
         - name: vpro-db-data
           awsElasticBlockStore:
-            volumesID: vol-0898334b9da9631f4
+            volumeID: vol-0898334b9da9631f4
             fsType: ext4
