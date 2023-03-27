@@ -14,18 +14,17 @@ spec:
       labels:
         app: vpromq01
     spec:
-      - containers:
-        name: vpromq01
+      containers:
+      - name: vpromq01
         image: rabbitmq
         ports:
-          - name: vpromq01-port
-            port: 15672
-        # set env variable from secret file {key.pair}
+        - name: vpromq01-port
+          containerPort: 15672
         env:
-          - name: RABBITMQ_DEFAULT_PASS
-            valueFrom:
-              secretKeyRef:
-                name: app-secret
-                key: rmq-pass
-          - name: RABBITMQ_DEFAULT_USER
-            value: "guest"
+        - name: RABBITMQ_DEFAULT_PASS
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: rmq-pass
+        - name: RABBITMQ_DEFAULT_USER
+          value: "guest"
